@@ -79,9 +79,13 @@ EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
 -- Booking cu chua co khuyen mai thi gia truoc giam bang tong tien hien tai.
+SET SQL_SAFE_UPDATES = 0;
+
 UPDATE bookings
 SET subtotal_price = total_price
 WHERE subtotal_price = 0;
+
+SET SQL_SAFE_UPDATES = 1;
 
 -- Ma khuyen mai co dinh dung cho do an: di tu 3 khach tro len se duoc giam 10%.
 INSERT INTO promotions (

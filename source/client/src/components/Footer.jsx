@@ -26,12 +26,13 @@ function Footer() {
         </div>
 
         <div>
-          <h4>Hành trình nổi bật</h4>
+          <h4>Thông tin liên hệ</h4>
           <ul className="footer-list">
-            <li>Khám phá tour theo điểm đến</li>
-            <li>Xem lịch trình và ngày khởi hành</li>
-            <li>Giữ chỗ và thanh toán nhanh</li>
-            <li>Theo dõi đơn đặt tour dễ dàng</li>
+            <li>Địa chỉ: 180 Cao Lỗ, Phường Chánh Hưng, TP. HCM</li>
+            <li>Giờ làm việc: 8:00 - 18:00 (Thứ 2 - Thứ 7)</li>
+            <li>Họ tên: Đàm Huỳnh Minh Nghĩa</li>
+            <li>Điện thoại: (028) 1234 5678</li>
+            <li>Email: dh52100953@chillnfree.com</li>
           </ul>
         </div>
       </div>

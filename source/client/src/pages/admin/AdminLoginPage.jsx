@@ -4,8 +4,8 @@ import FormField from '../../components/FormField.jsx';
 import { isAdminPortalRole, loginAdmin } from '../../services/admin/adminAuthService.js';
 
 const ADMIN_DEMO_ACCOUNTS = [
-  'Tài khoản quản trị: `admin01` / `123456`',
-  'Tài khoản vận hành: `staff01` / `123456`',
+  'Tài khoản quản trị: `dh52100953admin01` / `123456`',
+  'Tài khoản vận hành: `dh52100953staff01` / `123456`',
   'Role `admin` và `staff` được cấp quyền vào khu quản trị; role `user` sử dụng giao diện khách hàng',
 ];
 

@@ -64,9 +64,9 @@ function LoginPage() {
           Chill n Free.
         </p>
         <ul className="feature-list">
-          <li>Tài khoản trải nghiệm: `demo`</li>
-          <li>Mật khẩu trải nghiệm: `123456`</li>
-          <li>Tài khoản admin demo: `admin01` / `123456`</li>
+          <li>Tài khoản User: `dh52100953user`</li>
+          <li>Mật khẩu User: `123456`</li>
+          <li>Tài khoản admin: `dh52100953admin01` / `123456`</li>
         </ul>
       </section>
 
