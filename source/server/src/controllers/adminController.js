@@ -19,6 +19,11 @@ import {
   updateBookingStatusByAdmin as updateBookingStatusByAdminService,
   updatePaymentStatusByAdmin as updatePaymentStatusByAdminService,
   updateTourByAdmin as updateTourByAdminService,
+  getAdminPromotionList as getAdminPromotionListService,
+  getAdminPromotionDetail as getAdminPromotionDetailService,
+  createPromotionByAdmin as createPromotionByAdminService,
+  updatePromotionByAdmin as updatePromotionByAdminService,
+  deletePromotionByAdmin as deletePromotionByAdminService
 } from '../services/adminService.js';
 import { ApiError } from '../utils/apiError.js';
 import { sendSuccess } from '../utils/apiResponse.js';
@@ -284,5 +289,76 @@ export async function refundAdminPayment(req, res, next) {
     return sendSuccess(res, payment, 'Hoàn tiền thanh toán thành công.');
   } catch (error) {
     return next(error);
+  }
+}
+/**
+ * Khuyến mãi.
+ */
+
+/**
+ * Lấy danh sách khuyến mãi
+ */
+export async function listAdminPromotions(req, res, next) {
+  try {
+    // SỬA: Gọi đúng tên đã import ở đầu file (có đuôi Service)
+    const data = await getAdminPromotionListService(); 
+    return sendSuccess(res, data, 'Lấy danh sách khuyến mãi thành công.');
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Lấy chi tiết 1 mã
+ */
+export async function getAdminPromotion(req, res, next) {
+  try {
+    const { id } = req.params;
+    // SỬA: Gọi đúng tên đã import
+    const data = await getAdminPromotionDetailService(id);
+    return sendSuccess(res, data, 'Lấy chi tiết thành công.');
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Tạo mới mã khuyến mãi
+ */
+export async function createAdminPromotion(req, res, next) {
+  try {
+    // SỬA: Gọi đúng tên đã import
+    const result = await createPromotionByAdminService(req.body);
+    return sendSuccess(res, result, 'Tạo mã khuyến mãi thành công.', 201);
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Cập nhật mã
+ */
+export async function updateAdminPromotion(req, res, next) {
+  try {
+    const { id } = req.params;
+    // SỬA: Gọi đúng tên đã import
+    await updatePromotionByAdminService(id, req.body);
+    return sendSuccess(res, null, 'Cập nhật thành công.');
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Xóa mã
+ */
+export async function removeAdminPromotion(req, res, next) {
+  try {
+    const { id } = req.params;
+    // SỬA: Gọi đúng tên đã import
+    await deletePromotionByAdminService(id);
+    return sendSuccess(res, null, 'Xóa mã khuyến mãi thành công.');
+  } catch (error) {
+    next(error);
   }
 }

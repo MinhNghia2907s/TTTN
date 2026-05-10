@@ -6,6 +6,7 @@ const adminNavItems = [
   { to: '/admin/tours', label: 'Quản lý tour' },
   { to: '/admin/bookings', label: 'Quản lý booking' },
   { to: '/admin/payments', label: 'Quản lý thanh toán' },
+  { to: '/admin/promotions', label: 'Quản lý khuyến Mãi' },
 ];
 
 /**

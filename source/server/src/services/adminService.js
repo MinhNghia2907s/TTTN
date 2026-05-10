@@ -22,6 +22,7 @@ import {
 } from '../models/adminModel.js';
 import { findUserByEmail, findUserByPhone } from '../models/userModel.js';
 import { releaseDepartureSlots } from '../models/tourModel.js';
+import * as PromotionModel from '../models/promotionModel.js';
 import { ApiError } from '../utils/apiError.js';
 
 /**
@@ -1108,4 +1109,28 @@ export async function refundPaymentByAdmin(paymentCode) {
 
     return updatedPayment;
   });
+}
+/**
+ * Khuyến mãi.
+ */
+export async function getAdminPromotionList() {
+  return await PromotionModel.findAllPromotions();
+}
+
+export async function getAdminPromotionDetail(id) {
+  const promotion = await PromotionModel.getById(id);
+  if (!promotion) throw new ApiError(404, 'Không tìm thấy mã giảm giá.');
+  return promotion;
+}
+
+export async function createPromotionByAdmin(data) {
+  return await PromotionModel.createPromotion(data);
+}
+
+export async function updatePromotionByAdmin(id, data) {
+  return await PromotionModel.updatePromotion(id, data);
+}
+
+export async function deletePromotionByAdmin(id) {
+  return await PromotionModel.deletePromotion(id);
 }

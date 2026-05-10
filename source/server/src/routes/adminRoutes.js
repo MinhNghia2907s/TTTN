@@ -21,6 +21,11 @@ import {
   updateAdminPaymentStatus,
   updateAdminTour,
   updateAdminUser,
+  listAdminPromotions,
+  getAdminPromotion,
+  createAdminPromotion,
+  updateAdminPromotion,
+  removeAdminPromotion,
 } from '../controllers/adminController.js';
 import { authorizeAdmin, authorizeAdminPermission } from '../middlewares/adminMiddleware.js';
 import { authenticate } from '../middlewares/authMiddleware.js';
@@ -83,4 +88,39 @@ adminRouter.put(
 );
 adminRouter.post('/payments/refund/:paymentCode', authorizeAdminPermission('admin.payments.refund'), refundAdminPayment);
 
+// === QUẢN LÝ KHUYẾN MÃI (PROMOTIONS) ===
+// Lấy danh sách khuyến mãi
+adminRouter.get(
+  '/promotions', 
+  authorizeAdminPermission('admin.promotions.read'), 
+  listAdminPromotions
+);
+
+// Lấy chi tiết một mã để sửa
+adminRouter.get(
+  '/promotions/:id', 
+  authorizeAdminPermission('admin.promotions.read'), 
+  getAdminPromotion
+);
+
+// Tạo mã khuyến mãi mới
+adminRouter.post(
+  '/promotions', 
+  authorizeAdminPermission('admin.promotions.create'), 
+  createAdminPromotion
+);
+
+// Cập nhật mã khuyến mãi
+adminRouter.put(
+  '/promotions/:id', 
+  authorizeAdminPermission('admin.promotions.update'), 
+  updateAdminPromotion
+);
+
+// Xóa mã khuyến mãi
+adminRouter.delete(
+  '/promotions/:id', 
+  authorizeAdminPermission('admin.promotions.delete'), 
+  removeAdminPromotion
+);
 export default adminRouter;

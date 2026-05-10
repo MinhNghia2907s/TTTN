@@ -26,7 +26,8 @@ import ResetPasswordPage from '../pages/user/ResetPasswordPage.jsx';
 import TourDetailPage from '../pages/user/TourDetailPage.jsx';
 import TourListPage from '../pages/user/TourListPage.jsx';
 import RequireAuth from '../components/RequireAuth.jsx';
-
+import AdminPromotionListPage from '../pages/admin/AdminPromotionListPage.jsx'; 
+import AdminPromotionFormPage from '../pages/admin/AdminPromotionFormPage.jsx'; 
 /**
  * Khai báo toàn bộ route của ứng dụng:
  * - khu người dùng ở `/`
@@ -48,6 +49,9 @@ function AppRoutes() {
           <Route element={<AdminTourListPage />} path="tours" />
           <Route element={<AdminTourFormPage />} path="tours/new" />
           <Route element={<AdminTourFormPage />} path="tours/:tourId/edit" />
+          <Route element={<AdminPromotionListPage />} path="promotions" />
+          <Route element={<AdminPromotionFormPage />} path="promotions/new" />
+          <Route element={<AdminPromotionFormPage />} path="promotions/edit/:id" />
           <Route element={<AdminBookingListPage />} path="bookings" />
           <Route element={<AdminBookingDetailPage />} path="bookings/:bookingCode" />
           <Route element={<AdminPaymentListPage />} path="payments" />
