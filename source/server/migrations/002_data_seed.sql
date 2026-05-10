@@ -5,10 +5,6 @@
 -- ==================================================
 
 USE tour_db;
-SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
-SET character_set_client = utf8mb4;
-SET character_set_connection = utf8mb4;
-SET character_set_results = utf8mb4;
 
 -- Mở rộng enum role để seed hoạt động cả khi schema cũ mới chỉ có user và admin
 ALTER TABLE users
@@ -20,9 +16,9 @@ INSERT INTO users (
 ) VALUES
   (
     1,
-    'Nguyễn Demo',
-    'demo',
-    'demo@tourflow.local',
+    'Minh Nghĩa User',
+    'dh52100953user',
+    'dh52100953@gmail.com',
     '0900000000',
     '$2b$10$cuf3hTtRXx7ALPTzgbKr2ORzWokA2VOq7Zy1a877mke/2DGOXkr9S',
     'user',
@@ -32,21 +28,9 @@ INSERT INTO users (
   ),
   (
     2,
-    'Trần Thu Hà',
-    'hatran',
-    'ha@example.com',
-    '0908123456',
-    '$2b$10$cuf3hTtRXx7ALPTzgbKr2ORzWokA2VOq7Zy1a877mke/2DGOXkr9S',
-    'user',
-    'active',
-    '2026-03-20 08:30:00',
-    '2026-03-20 08:30:00'
-  ),
-  (
-    3,
-    'Phạm Quản Trị',
-    'admin01',
-    'admin@tourflow.local',
+    'Minh Nghĩa Quản Trị',
+    'dh52100953admin01',
+    'admin01@gmail.com',
     '0908111222',
     '$2b$10$cuf3hTtRXx7ALPTzgbKr2ORzWokA2VOq7Zy1a877mke/2DGOXkr9S',
     'admin',
@@ -55,10 +39,10 @@ INSERT INTO users (
     '2026-03-19 08:00:00'
   ),
   (
-    4,
-    'Lê Điều Hành Tour',
-    'staff01',
-    'staff@tourflow.local',
+    3,
+    'Minh Nghĩa Nhân Viên',
+    'dh52100953staff01',
+    'staff01@gmail.com',
     '0908333444',
     '$2b$10$cuf3hTtRXx7ALPTzgbKr2ORzWokA2VOq7Zy1a877mke/2DGOXkr9S',
     'staff',
@@ -546,8 +530,8 @@ INSERT INTO bookings (
     1,
     2,
     3,
-    'Nguyễn Demo',
-    'demo@tourflow.local',
+    'Minh Nghĩa User',
+    'dh52100953@gmail.com',
     '0900000000',
     2,
     11780000,
@@ -570,8 +554,8 @@ INSERT INTO bookings (
     1,
     1,
     2,
-    'Nguyễn Demo',
-    'demo@tourflow.local',
+    'Minh Nghĩa User',
+    'dh52100953@gmail.com',
     '0900000000',
     3,
     13170000,
@@ -593,8 +577,8 @@ INSERT INTO bookings (
     1,
     3,
     5,
-    'Nguyễn Demo',
-    'demo@tourflow.local',
+    'Minh Nghĩa User',
+    'dh52100953@gmail.com',
     '0900000000',
     2,
     13580000,
@@ -624,7 +608,7 @@ INSERT INTO payments (
     11780000,
     'Thẻ nội địa',
     'paid',
-    'NGUYEN DEMO',
+    'MINH NGHĨA USER',
     '0001',
     '2026-03-14 09:24:00',
     '2026-03-14 09:24:00',
@@ -652,7 +636,7 @@ INSERT INTO payments (
     13580000,
     'Ví điện tử',
     'paid',
-    'NGUYEN DEMO',
+    'MINH NGHĨA USER',
     '9988',
     '2026-03-02 08:45:00',
     '2026-03-02 08:45:00',
@@ -677,7 +661,7 @@ INSERT INTO testimonials (
     'Trần Thu Hà',
     'Khách hàng quay lại lần 3',
     'Mình thích cách website trình bày tour rất rõ: hình đẹp, lịch khởi hành dễ xem và tổng chi phí hiển thị minh bạch.',
-    1,
+    1,  
     '2026-03-20 08:00:00'
   ),
   (

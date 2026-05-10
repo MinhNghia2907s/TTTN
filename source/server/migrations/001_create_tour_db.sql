@@ -9,10 +9,6 @@ CREATE DATABASE IF NOT EXISTS tour_db
   COLLATE utf8mb4_unicode_ci;
 
 USE tour_db;
-SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
-SET character_set_client = utf8mb4;
-SET character_set_connection = utf8mb4;
-SET character_set_results = utf8mb4;
 
 -- Xoa bang theo thu tu khoa ngoai neu can chay lai script trong luc phat trien
 DROP TABLE IF EXISTS reviews;
@@ -39,7 +35,7 @@ CREATE TABLE users (
   UNIQUE KEY uq_users_username (username),
   UNIQUE KEY uq_users_email (email),
   UNIQUE KEY uq_users_phone (phone)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE tours (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -65,7 +61,7 @@ CREATE TABLE tours (
   KEY idx_tours_location (location),
   KEY idx_tours_category (category),
   KEY idx_tours_price (price)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE tour_itineraries (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -80,7 +76,7 @@ CREATE TABLE tour_itineraries (
     FOREIGN KEY (tour_id) REFERENCES tours(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE tour_departures (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -101,7 +97,7 @@ CREATE TABLE tour_departures (
     FOREIGN KEY (tour_id) REFERENCES tours(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE bookings (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -139,7 +135,7 @@ CREATE TABLE bookings (
     FOREIGN KEY (departure_id) REFERENCES tour_departures(id)
     ON DELETE RESTRICT
     ON UPDATE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE payments (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -166,7 +162,7 @@ CREATE TABLE payments (
     FOREIGN KEY (user_id) REFERENCES users(id)
     ON DELETE RESTRICT
     ON UPDATE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE reviews (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -193,7 +189,7 @@ CREATE TABLE reviews (
     FOREIGN KEY (booking_id) REFERENCES bookings(id)
     ON DELETE SET NULL
     ON UPDATE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
 
 CREATE TABLE testimonials (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -203,4 +199,4 @@ CREATE TABLE testimonials (
   sort_order INT UNSIGNED NOT NULL DEFAULT 0,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);

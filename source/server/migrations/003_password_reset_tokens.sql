@@ -5,10 +5,6 @@
 -- ==================================================
 
 USE tour_db;
-SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
-SET character_set_client = utf8mb4;
-SET character_set_connection = utf8mb4;
-SET character_set_results = utf8mb4;
 
 CREATE TABLE IF NOT EXISTS password_reset_tokens (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -25,4 +21,4 @@ CREATE TABLE IF NOT EXISTS password_reset_tokens (
     FOREIGN KEY (user_id) REFERENCES users(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+);
