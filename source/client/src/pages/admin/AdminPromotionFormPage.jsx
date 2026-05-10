@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { adminPromotionService } from '../../services/admin/adminPromotionService';
+import FormField from '../../components/FormField.jsx';
 
 function AdminPromotionFormPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isEditMode = Boolean(id); // Đã đổi tên thống nhất thành isEditMode
+  const isEditMode = Boolean(id);
   const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [formData, setFormData] = useState({
     code: '',
@@ -21,9 +24,9 @@ function AdminPromotionFormPage() {
 
   useEffect(() => {
     if (isEditMode) {
-      const fetchDetail = async () => {
-        try {
-          const res = await adminPromotionService.getPromotion(id);
+      setLoading(true);
+      adminPromotionService.getPromotion(id)
+        .then(res => {
           if (res.success && res.data) {
             const d = res.data;
             setFormData({
@@ -32,191 +35,194 @@ function AdminPromotionFormPage() {
               endsAt: d.endsAt ? new Date(d.endsAt).toISOString().slice(0, 16) : ''
             });
           }
-        } catch (error) {
-          console.error("Lỗi khi lấy chi tiết:", error);
-        }
-      };
-      fetchDetail();
+        })
+        .finally(() => setLoading(false));
     }
   }, [id, isEditMode]);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === 'code' ? value.toUpperCase() : value
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSubmitting(true);
+    setErrorMessage('');
+
     try {
       const res = isEditMode 
         ? await adminPromotionService.updatePromotion(id, formData)
         : await adminPromotionService.createPromotion(formData);
-
+      
       if (res.success) {
-        alert(isEditMode ? "Cập nhật thành công!" : "Tạo mã thành công!");
         navigate('/admin/promotions');
       }
     } catch (error) {
-      alert("Đã có lỗi xảy ra.");
+      setErrorMessage(error.message || 'Có lỗi xảy ra khi lưu dữ liệu.');
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
+  if (loading) return <p className="helper-text p-8">Đang tải thông tin mã giảm giá...</p>;
+
   return (
-    <div className="admin-content p-8 bg-[#f0f2f5] min-h-screen">
-      {/* 1. HEADER */}
-      <div className="mb-8">
-        <span className="text-[12px] uppercase font-bold text-gray-400 tracking-widest">KHUYẾN MÃI</span>
-        <div className="flex justify-between items-center mt-1">
-          <h1 className="text-3xl font-light text-slate-800">
-            {isEditMode ? 'Điều chỉnh thông số chương trình ưu đãi' : 'Thiết lập chương trình khuyến mãi mới'}
-          </h1>
-          <button 
-            type="button"
-            onClick={() => navigate('/admin/promotions')}
-            className="px-6 py-2 bg-white border border-gray-200 rounded-xl font-bold text-slate-600 hover:bg-gray-50 shadow-sm transition-all"
-          >
-            Quay lại danh sách
-          </button>
-        </div>
-        <p className="text-slate-500 mt-2 text-sm">Theo dõi mã giảm giá, thời gian áp dụng và mức độ tương tác của từng chương trình.</p>
-      </div>
-
-      {/* 2. STATS CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        {[
-          { label: 'Trạng thái hiện tại', value: isEditMode ? 'Đang chỉnh sửa' : 'Đang tạo mới', sub: 'Mã: ' + (formData.code || 'Chưa đặt') },
-          { label: 'Loại áp dụng', value: formData.discountType === 'percent' ? 'Phần trăm' : 'Cố định', sub: 'Tự động tính toán' },
-          { label: 'Khách tối thiểu', value: formData.minTravelers + ' khách', sub: 'Điều kiện áp dụng' },
-          { label: 'Giá trị giảm', value: Number(formData.discountValue).toLocaleString() + (formData.discountType === 'percent' ? '%' : 'đ'), sub: 'Mức ưu đãi' },
-        ].map((item, idx) => (
-          <div key={idx} className="bg-white p-6 rounded-[24px] shadow-sm border border-gray-100">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-tight">{item.label}</p>
-            <h3 className="text-2xl font-bold text-slate-800 mt-1">{item.value}</h3>
-            <div className="mt-2 text-[11px] bg-gray-50 text-gray-500 py-1 px-3 rounded-full inline-block">{item.sub}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* 3. MAIN FORM CARD */}
-      <div className="bg-white rounded-[28px] shadow-sm border border-gray-100 overflow-hidden">
-        <div className="p-6 border-b border-gray-50 bg-gray-50/30">
-          <h2 className="font-bold text-slate-700">Thông tin chi tiết khuyến mãi</h2>
-          <p className="text-xs text-gray-400">Mở chi tiết để cập nhật thông số, điều kiện và trạng thái vận hành.</p>
-        </div>
-        
-        <form onSubmit={handleSubmit} className="p-10 space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="space-y-2">
-              <label className="text-[11px] uppercase font-extrabold text-gray-400 tracking-wider">Mã CODE</label>
-              <input
-                type="text"
-                placeholder="VÍ DỤ: SUMMER2024"
-                className="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none font-bold text-slate-700"
-                value={formData.code}
-                onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-                required
-              />
-            </div>
-            <div className="md:col-span-2 space-y-2">
-              <label className="text-[11px] uppercase font-extrabold text-gray-400 tracking-wider">Tên chương trình hiển thị</label>
-              <input
-                type="text"
-                placeholder="Nhập tên chương trình khuyến mãi..."
-                className="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-              />
-            </div>
+    <div className="page-stack">
+      {/* SECTION HEADING - GIỐNG HỆT TRANG TOUR */}
+      <section className="content-card">
+        <div className="section-heading-row admin-page-actions">
+          <div>
+            <p className="booking-id">{isEditMode ? `PROMO #${id}` : 'PROMO-NEW'}</p>
+            <h2>{isEditMode ? 'Chỉnh sửa mã giảm giá' : 'Thêm chương trình ưu đãi mới'}</h2>
+            <p className="helper-text">
+              {isEditMode 
+                ? `Mã giảm giá hiện tại đang ở trạng thái ${formData.status === 'active' ? 'đang hoạt động' : 'tạm dừng'}.`
+                : 'Thiết lập các điều kiện áp dụng, mức giảm và thời gian hiệu lực cho mã.'}
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="space-y-2">
-              <label className="text-[11px] uppercase font-extrabold text-gray-400 tracking-wider">Loại giảm</label>
-              <select
-                className="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none font-medium"
+          <div className="admin-topbar-actions">
+            <Link className="button button-secondary" to="/admin/promotions">
+              Về danh sách
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+      <div className="admin-detail-grid">
+        {/* CỘT TRÁI - FORM NHẬP LIỆU */}
+        <section className="content-card">
+          <form className="form-card" onSubmit={handleSubmit}>
+            <h2>Thông tin cấu hình</h2>
+
+            <div className="admin-form-grid">
+              <FormField 
+                label="Mã Code" 
+                name="code" 
+                onChange={handleInputChange} 
+                value={formData.code} 
+                placeholder="VD: SUMMER2024"
+              />
+              <FormField 
+                label="Tên chương trình" 
+                name="name" 
+                onChange={handleInputChange} 
+                value={formData.name} 
+                placeholder="VD: Ưu đãi chào hè"
+              />
+              
+              <FormField
+                as="select"
+                label="Loại giảm giá"
+                name="discountType"
+                onChange={handleInputChange}
                 value={formData.discountType}
-                onChange={(e) => setFormData({ ...formData, discountType: e.target.value })}
-              >
-                <option value="percent">Phần trăm (%)</option>
-                <option value="fixed">Cố định (VNĐ)</option>
-              </select>
-            </div>
-            <div className="space-y-2">
-              <label className="text-[11px] uppercase font-extrabold text-gray-400 tracking-wider">Giá trị</label>
-              <input
-                type="number"
-                className="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none font-bold"
-                value={formData.discountValue}
-                onChange={(e) => setFormData({ ...formData, discountValue: e.target.value })}
-                required
+                options={[
+                  { value: 'percent', label: 'Theo phần trăm (%)' },
+                  { value: 'fixed', label: 'Số tiền cố định (đ)' }
+                ]}
               />
-            </div>
-            <div className="space-y-2">
-              <label className="text-[11px] uppercase font-extrabold text-gray-400 tracking-wider">Trạng thái</label>
-              <select
-                className="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none"
+
+              <FormField 
+                label="Giá trị giảm" 
+                name="discountValue" 
+                type="number" 
+                onChange={handleInputChange} 
+                value={formData.discountValue} 
+              />
+
+              <FormField
+                as="select"
+                label="Trạng thái"
+                name="status"
+                onChange={handleInputChange}
                 value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                options={[
+                  { value: 'active', label: 'Đang hoạt động' },
+                  { value: 'inactive', label: 'Tạm dừng' }
+                ]}
+              />
+
+              <FormField 
+                label="Số khách tối thiểu" 
+                name="minTravelers" 
+                type="number" 
+                onChange={handleInputChange} 
+                value={formData.minTravelers} 
+              />
+            </div>
+
+            <div className="admin-form-grid mt-4">
+               <FormField 
+                label="Ngày bắt đầu" 
+                name="startsAt" 
+                type="datetime-local" 
+                onChange={handleInputChange} 
+                value={formData.startsAt} 
+              />
+               <FormField 
+                label="Ngày kết thúc" 
+                name="endsAt" 
+                type="datetime-local" 
+                onChange={handleInputChange} 
+                value={formData.endsAt} 
+              />
+            </div>
+
+            <div className="admin-form-actions">
+              <button 
+                className="button button-primary" 
+                disabled={isSubmitting} 
+                type="submit"
               >
-                <option value="active">Đang hoạt động</option>
-                <option value="inactive">Tạm dừng</option>
-              </select>
+                {isSubmitting ? 'Đang lưu...' : isEditMode ? 'Lưu cập nhật' : 'Tạo mã mới'}
+              </button>
+              <Link className="button button-secondary" to="/admin/promotions">
+                Hủy và quay lại
+              </Link>
             </div>
-            <div className="space-y-2">
-              <label className="text-[11px] uppercase font-extrabold text-gray-400 tracking-wider">Khách tối thiểu</label>
-              <input
-                type="number"
-                className="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none"
-                value={formData.minTravelers}
-                onChange={(e) => setFormData({ ...formData, minTravelers: e.target.value })}
-                required
-              />
-            </div>
+          </form>
+        </section>
+
+        {/* CỘT PHẢI - TÓM TẮT (SUMMARY) - GIỐNG HỆT TRANG TOUR */}
+        <section className="content-card">
+          <h2>Tóm tắt nhanh</h2>
+          <div className="admin-summary-grid">
+            <article className="admin-mini-card">
+              <span>Mức giảm</span>
+              <strong>
+                {formData.discountType === 'percent' 
+                  ? `${formData.discountValue}%` 
+                  : `${Number(formData.discountValue).toLocaleString()}đ`}
+              </strong>
+            </article>
+            <article className="admin-mini-card">
+              <span>Áp dụng cho</span>
+              <strong>Từ {formData.minTravelers} khách</strong>
+            </article>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-2">
-              <label className="text-[11px] uppercase font-extrabold text-gray-400 tracking-wider">Thời gian bắt đầu</label>
-              <input
-                type="datetime-local"
-                className="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none"
-                value={formData.startsAt}
-                onChange={(e) => setFormData({ ...formData, startsAt: e.target.value })}
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-[11px] uppercase font-extrabold text-gray-400 tracking-wider">Thời gian kết thúc</label>
-              <input
-                type="datetime-local"
-                className="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-orange-500 outline-none"
-                value={formData.endsAt}
-                onChange={(e) => setFormData({ ...formData, endsAt: e.target.value })}
-              />
-            </div>
+          <div className="admin-list-stack">
+            <article className="admin-mini-card">
+              <span>Trạng thái hiện tại</span>
+              <strong className={formData.status === 'active' ? 'text-success' : 'text-danger'}>
+                {formData.status === 'active' ? 'Đang hoạt động' : 'Tạm dừng'}
+              </strong>
+            </article>
+            <article className="admin-mini-card">
+              <span>Thời hạn áp dụng</span>
+              <strong>
+                {formData.startsAt ? new Date(formData.startsAt).toLocaleDateString('vi-VN') : '---'}
+              </strong>
+            </article>
           </div>
-
-          <div className="pt-10 flex justify-end gap-4 border-t border-gray-50">
-            <button
-              type="button"
-              onClick={() => navigate('/admin/promotions')}
-              className="px-8 py-3 rounded-xl font-bold text-gray-400 hover:text-slate-600 hover:bg-gray-50 transition-all"
-            >
-              Hủy bỏ thay đổi
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className={`px-10 py-3 rounded-xl font-bold text-white shadow-lg transition-all active:scale-95 ${
-                loading ? 'bg-gray-300 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600 shadow-orange-100'
-              }`}
-            >
-              {loading ? (
-                'Đang lưu...'
-              ) : (
-                isEditMode ? 'Xác nhận cập nhật' : 'Tạo mã mới'
-              )}
-            </button>
-          </div>
-        </form>
+        </section>
       </div>
     </div>
   );
