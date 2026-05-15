@@ -1351,10 +1351,10 @@
   align-items: flex-start;
 }
 
-.admin-status-stack > *,
-.admin-results-meta > *,
-.admin-list-item-side > *,
-.chip-row > * {
+.admin-status-stack>*,
+.admin-results-meta>*,
+.admin-list-item-side>*,
+.chip-row>* {
   min-width: 0;
 }
 
@@ -1400,6 +1400,7 @@
 }
 
 @media (max-width: 1200px) {
+
   .admin-shell,
   .admin-body,
   .admin-detail-grid,
@@ -1441,6 +1442,7 @@
 }
 
 @media (max-width: 980px) {
+
   .admin-login-shell,
   .admin-check-grid,
   .admin-quick-list,
@@ -1473,6 +1475,7 @@
 }
 
 @media (max-width: 760px) {
+
   .admin-shell,
   .admin-login-shell {
     padding: 0 14px 14px;
@@ -1739,5 +1742,36 @@
   .admin-list-item strong,
   .admin-mini-card strong {
     font-size: 0.9rem;
+  }
+
+  .form-field {
+    min-width: 0;
+  }
+
+  .form-field input[type="datetime-local"] {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    margin-left: 8px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .input-shell {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .input-shell input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 }

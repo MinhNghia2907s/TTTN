@@ -54,10 +54,10 @@ function AdminPromotionFormPage() {
     setErrorMessage('');
 
     try {
-      const res = isEditMode 
+      const res = isEditMode
         ? await adminPromotionService.updatePromotion(id, formData)
         : await adminPromotionService.createPromotion(formData);
-      
+
       if (res.success) {
         navigate('/admin/promotions');
       }
@@ -79,7 +79,7 @@ function AdminPromotionFormPage() {
             <p className="booking-id">{isEditMode ? `PROMO #${id}` : 'PROMO-NEW'}</p>
             <h2>{isEditMode ? 'Chỉnh sửa mã giảm giá' : 'Thêm chương trình ưu đãi mới'}</h2>
             <p className="helper-text">
-              {isEditMode 
+              {isEditMode
                 ? `Mã giảm giá hiện tại đang ở trạng thái ${formData.status === 'active' ? 'đang hoạt động' : 'tạm dừng'}.`
                 : 'Thiết lập các điều kiện áp dụng, mức giảm và thời gian hiệu lực cho mã.'}
             </p>
@@ -102,21 +102,21 @@ function AdminPromotionFormPage() {
             <h2>Thông tin cấu hình</h2>
 
             <div className="admin-form-grid">
-              <FormField 
-                label="Mã Code" 
-                name="code" 
-                onChange={handleInputChange} 
-                value={formData.code} 
+              <FormField
+                label="Mã Code"
+                name="code"
+                onChange={handleInputChange}
+                value={formData.code}
                 placeholder="VD: SUMMER2024"
               />
-              <FormField 
-                label="Tên chương trình" 
-                name="name" 
-                onChange={handleInputChange} 
-                value={formData.name} 
+              <FormField
+                label="Tên chương trình"
+                name="name"
+                onChange={handleInputChange}
+                value={formData.name}
                 placeholder="VD: Ưu đãi chào hè"
               />
-              
+
               <FormField
                 as="select"
                 label="Loại giảm giá"
@@ -129,12 +129,12 @@ function AdminPromotionFormPage() {
                 ]}
               />
 
-              <FormField 
-                label="Giá trị giảm" 
-                name="discountValue" 
-                type="number" 
-                onChange={handleInputChange} 
-                value={formData.discountValue} 
+              <FormField
+                label="Giá trị giảm"
+                name="discountValue"
+                type="number"
+                onChange={handleInputChange}
+                value={formData.discountValue}
               />
 
               <FormField
@@ -149,36 +149,43 @@ function AdminPromotionFormPage() {
                 ]}
               />
 
-              <FormField 
-                label="Số khách tối thiểu" 
-                name="minTravelers" 
-                type="number" 
-                onChange={handleInputChange} 
-                value={formData.minTravelers} 
+              <FormField
+                label="Số khách tối thiểu"
+                name="minTravelers"
+                type="number"
+                onChange={handleInputChange}
+                value={formData.minTravelers}
               />
             </div>
 
-            <div className="admin-form-grid mt-4">
-               <FormField 
-                label="Ngày bắt đầu" 
-                name="startsAt" 
-                type="datetime-local" 
-                onChange={handleInputChange} 
-                value={formData.startsAt} 
+            <div className="admin-form-grid mt-4"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '24px',
+                width: '100%'
+              }}
+            >
+              <FormField
+                label="Ngày bắt đầu"
+                name="startsAt"
+                type="datetime-local"
+                onChange={handleInputChange}
+                value={formData.startsAt}
               />
-               <FormField 
-                label="Ngày kết thúc" 
-                name="endsAt" 
-                type="datetime-local" 
-                onChange={handleInputChange} 
-                value={formData.endsAt} 
+              <FormField
+                label="Ngày kết thúc"
+                name="endsAt"
+                type="datetime-local"
+                onChange={handleInputChange}
+                value={formData.endsAt}
               />
             </div>
 
             <div className="admin-form-actions">
-              <button 
-                className="button button-primary" 
-                disabled={isSubmitting} 
+              <button
+                className="button button-primary"
+                disabled={isSubmitting}
                 type="submit"
               >
                 {isSubmitting ? 'Đang lưu...' : isEditMode ? 'Lưu cập nhật' : 'Tạo mã mới'}
@@ -197,8 +204,8 @@ function AdminPromotionFormPage() {
             <article className="admin-mini-card">
               <span>Mức giảm</span>
               <strong>
-                {formData.discountType === 'percent' 
-                  ? `${formData.discountValue}%` 
+                {formData.discountType === 'percent'
+                  ? `${formData.discountValue}%`
                   : `${Number(formData.discountValue).toLocaleString()}đ`}
               </strong>
             </article>

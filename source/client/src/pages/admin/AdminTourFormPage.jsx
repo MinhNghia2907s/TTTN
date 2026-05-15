@@ -632,7 +632,7 @@ function AdminTourFormPage() {
                   value={departure.departureCode}
                 />
                 <FormField
-                  label="Nhãn hiển thị"
+                  label ="Nhãn hiển thị"
                   name={`departure-label-${index}`}
                   onChange={(event) => handleDepartureChange(index, 'labelText', event.target.value)}
                   value={departure.labelText}
