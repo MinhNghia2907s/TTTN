@@ -48,7 +48,6 @@ source/
 ## Cài đặt
 
 ```bash
-cd C:\Users\Lenovo\Desktop\tour\source
 npm install
 ```
 
@@ -61,7 +60,6 @@ Project hiện được cấu hình để frontend và backend cùng chạy trê
 Chạy lệnh:
 
 ```bash
-cd C:\Users\Lenovo\Desktop\tour\source
 npm run dev
 ```
 
@@ -76,14 +74,12 @@ Giải thích:
 Build frontend:
 
 ```bash
-cd C:\Users\Lenovo\Desktop\tour\source
 npm run build
 ```
 
 Sau đó chạy backend để serve luôn frontend build:
 
 ```bash
-cd C:\Users\Lenovo\Desktop\tour\source
 npm run start:server
 ```
 
@@ -95,8 +91,8 @@ Khi đó ứng dụng cũng truy cập tại:
 
 Project dùng chung:
 
-- [`.env`](/C:/Users/Lenovo/Desktop/tour/source/.env)
-- [`.env.example`](/C:/Users/Lenovo/Desktop/tour/source/.env.example)
+- [`.env`](/Desktop/TTTN/source/.env)
+- [`.env.example`](/Desktop/TTTN/source/.env.example)
 
 Các nhóm biến chính:
 
@@ -148,16 +144,19 @@ Hiệu ứng hero có thể đổi nhanh bằng env:
 
 Thư mục SQL hiện có tại:
 
-- [server/migrations/001_create_tour_db.sql](/C:/Users/Lenovo/Desktop/tour/source/server/migrations/001_create_tour_db.sql)
-- [server/migrations/002_data_seed.sql](/C:/Users/Lenovo/Desktop/tour/source/server/migrations/002_data_seed.sql)
-- [server/migrations/003_password_reset_tokens.sql](/C:/Users/Lenovo/Desktop/tour/source/server/migrations/003_password_reset_tokens.sql)
+- [server/migrations/001_create_tour_db.sql](/Desktop/TTTN/source/server/migrations/001_create_tour_db.sql)
+- [server/migrations/002_data_seed.sql](/Desktop/TTTN/source/server/migrations/002_data_seed.sql)
+- [server/migrations/003_password_reset_tokens.sql](/Desktop/TTTN/source/server/migrations/003_password_reset_tokens.sql)
 
 Thứ tự chạy:
 
 1. Tạo database và bảng bằng `001_create_tour_db.sql`
 2. Seed dữ liệu mẫu bằng `002_data_seed.sql`
 3. Tạo bảng token đặt lại mật khẩu bằng `003_password_reset_tokens.sql`
-
+4. Bankend cho phần admin `004_admin_backend_extensions.sql`
+5. Database mã giảm giá `005_promotions.sql`
+6. PayOS `006_payos_payment_fields.sql`
+7. Test PayOS `007_payos_test_tours.sql`
 Database mẫu đang dùng tên:
 
 - `tour_db`
@@ -166,9 +165,9 @@ Database mẫu đang dùng tên:
 
 Có sẵn tài khoản demo để kiểm tra nhanh các luồng chính:
 
-- Người dùng frontend: `demo` / `123456`
-- Admin portal: `admin` / `admin123`
-- Staff portal: `staff` / `staff123`
+- Người dùng frontend: `dh52100953user` / `123456`
+- Admin portal: `dh52100953admin01` / `123456`
+- Staff portal: `dh52100953staff01` / `123456`
 
 Các luồng tài khoản người dùng hiện có:
 
@@ -188,12 +187,12 @@ Portal `/admin` hiện có 2 role nội bộ:
 
 Permission backend đang được chặn theo từng endpoint tại:
 
-- [server/src/routes/adminRoutes.js](/C:/Users/Lenovo/Desktop/tour/source/server/src/routes/adminRoutes.js)
-- [server/src/middlewares/adminMiddleware.js](/C:/Users/Lenovo/Desktop/tour/source/server/src/middlewares/adminMiddleware.js)
+- [server/src/routes/adminRoutes.js](/Desktop/TTTN/source/server/src/routes/adminRoutes.js)
+- [server/src/middlewares/adminMiddleware.js](/Desktop/TTTN/source/server/src/middlewares/adminMiddleware.js)
 
 Permission frontend đang được đồng bộ theo session admin tại:
 
-- [client/src/services/admin/adminAuthService.js](/C:/Users/Lenovo/Desktop/tour/source/client/src/services/admin/adminAuthService.js)
+- [client/src/services/admin/adminAuthService.js](/Desktop/TTTN/source/client/src/services/admin/adminAuthService.js)
 
 Ma trận quyền theo từng trang đã làm trong code:
 

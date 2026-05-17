@@ -1,7 +1,6 @@
 -- ==================================================
 -- 004_admin_backend_extensions.sql
--- Mở rộng schema để phục vụ backend giai đoạn 2 phần admin
--- Chạy sau 001_create_tour_db.sql và 002_data_seed.sql
+-- Mở rộng schema để phục vụ backend phần admin
 -- ==================================================
 
 USE tour_db;

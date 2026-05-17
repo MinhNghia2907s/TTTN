@@ -1,6 +1,6 @@
 -- ==================================================
 -- 001_create_tour_db.sql
--- Tao database va cac bang chinh cho web dat tour
+-- Tao database va cac bang chinh
 -- Tên database đang đồng bộ với source/.env
 -- ==================================================
 

@@ -1,6 +1,6 @@
 -- ==================================================
 -- 002_data_seed.sql
--- Dữ liệu mẫu cho giai đoạn 1 phần người dùng
+-- Dữ liệu mẫu cho phần người dùng
 -- Chạy sau file 001_create_tour_db.sql
 -- ==================================================
 
