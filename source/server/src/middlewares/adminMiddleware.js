@@ -11,6 +11,7 @@ const STAFF_PERMISSIONS = [
   'admin.bookings.update_status',
   'admin.payments.read',
   'admin.payments.update_status',
+  'admin.promotions.read',
 ];
 
 /**
@@ -66,13 +67,13 @@ function hasAdminPermission(role, permission) {
 export function authorizeAdminPermission(permission) {
   return function checkAdminPermission(req, res, next) {
     if (!req.user) {
-      return next(new ApiError(401, 'Báº¡n cáº§n Ä‘Äƒng nháº­p Ä‘á»ƒ thá»±c hiá»‡n thao tÃ¡c nÃ y.'));
+      return next(new ApiError(401, 'Bạn cần đăng nhập để truy cập khu vực quản trị.'));
     }
 
     if (hasAdminPermission(req.user.role, permission)) {
       return next();
     }
 
-    return next(new ApiError(403, 'Báº¡n khÃ´ng cÃ³ quyá»n thá»±c hiá»‡n thao tÃ¡c nÃ y.'));
+    return next(new ApiError(403, 'Bạn không có quyền thực hiện thao tác này.'));
   };
 }

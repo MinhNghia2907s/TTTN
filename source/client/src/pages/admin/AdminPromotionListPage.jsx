@@ -7,7 +7,8 @@ function AdminPromotionListPage() {
   const [promotions, setPromotions] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const currentUser = JSON.parse(localStorage.getItem('user'));
+const isAdmin = currentUser?.role === 'admin';
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');

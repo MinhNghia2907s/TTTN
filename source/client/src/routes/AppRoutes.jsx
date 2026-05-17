@@ -52,6 +52,7 @@ function AppRoutes() {
           <Route element={<AdminPromotionListPage />} path="promotions" />
           <Route element={<AdminPromotionFormPage />} path="promotions/new" />
           <Route element={<AdminPromotionFormPage />} path="promotions/edit/:id" />
+          <Route element={<AdminPromotionFormPage />}path="promotions/view/:id"/>
           <Route element={<AdminBookingListPage />} path="bookings" />
           <Route element={<AdminBookingDetailPage />} path="bookings/:bookingCode" />
           <Route element={<AdminPaymentListPage />} path="payments" />

@@ -7,6 +7,19 @@ Website đặt tour du lịch với cấu trúc `client/server`, dùng chung `pa
 - Node.js 18 trở lên
 - npm 9 trở lên
 
+## Công nghệ sử dụng
+
+- Frontend: ReactJS
+- UI styling: Tailwind CSS
+- Backend: Node.js + ExpressJS
+- Database: MySQL
+- Gọi API từ frontend: Axios
+- Điều hướng trang: React Router DOM
+- Mã hóa mật khẩu: bcrypt
+- Xác thực đăng nhập: JWT
+- Kết nối MySQL: mysql2
+- PayOS
+
 ## Cấu trúc thư mục
 
 ```text
